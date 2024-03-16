@@ -29,7 +29,7 @@ async def scrape_data(client, message):
             tag = f"@{message.from_user.username}"
         else:
             tag = message.from_user.mention(message.from_user.first_name, style='html')
-        if await forcesub(c, message, tag):
+        if await forcesub(client, message, tag):
             return
     await sendMessage(message, "Bot Is Under Maintenance")
 
