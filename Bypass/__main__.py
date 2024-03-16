@@ -1,4 +1,4 @@
-from Bypass import bot, LOGGER, Config
+from Bypass import LOGGER, Config
 from pyrogram import idle
 from pyrogram.filters import command, user
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
@@ -6,6 +6,8 @@ from os import path as ospath, execl
 from asyncio import create_subprocess_exec
 from sys import executable
 from Bypass.core.sites.gdtot_bypasser import gdtot
+
+bot = Client("Diffusion", api_id=Config.API_ID, api_hash=Config.API_HASH, bot_token=Config.BOT_TOKEN, plugins=dict(root="Bypass/plugins"), parse_mode=ParseMode.HTML)
 
 @bot.on_message(filters.command('start'))
 async def start_command(client, message):
