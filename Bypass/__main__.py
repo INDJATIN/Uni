@@ -45,7 +45,7 @@ async def main():
     bot.add_handler(MessageHandler(
         start, filters=command(BotCommands.StartCommand) & private))
     bot.add_handler(MessageHandler(
-        restart, filters=command(BotCommands.RestartCommand) & user(Config.OWNER_ID))
+        restart, filters=command(BotCommands.RestartCommand) & user(Config.OWNER_ID)))
     LOGGER.info("Bypass Bot Started!")
     await bot.start()
     await idle()
