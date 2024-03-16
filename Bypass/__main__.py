@@ -22,4 +22,25 @@ async def scrape_data(client, message):
     elif "gdtot" not in message.text:
         await message.reply("Sorry, Bot Supports Only Gdtot Links")
 
-bot.run()
+@Bypass.on_message(filters.command('restart') & filters.user(Config.OWNER_ID))
+async def restart(client, message):
+    restart_message = await message.reply('<i>Restarting...</i>')
+    await (await create_subprocess_exec('python3', 'update.py')).wait()
+    with open(".restartmsg", "w") as f:
+        f.write(f"{restart_message.chat.id}\n{restart_message.id}\n")
+    execl(executable, executable, "-m", "Bypass")
+
+async def restart():
+    if ospath.isfile(".restartmsg"):
+        with open(".restartmsg") as f:
+            chat_id, msg_id = map(int, f)
+        try:
+            await Bypass.edit_message_text(chat_id=chat_id, message_id=msg_id, text="<i>Restarted !</i>")
+        except Exception as e:
+            LOGGER.error(e)
+
+Bypass.start()
+LOGGER.info('Bot Started!')
+Bypass.loop.run_until_complete(restart())
+idle()
+Bypass.stop()
