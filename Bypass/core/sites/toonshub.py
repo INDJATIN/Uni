@@ -11,6 +11,7 @@ async def toonshub_main(url):
         return await toonshub_scraper(url)
       
 async def toonshub_scraper(url):
+    msg = ""
     res = requests.get(url)
     soup = BeautifulSoup(res.text,'html.parser')
     sub = soup.find_all('a',{'class':'shortc-button medium button'})
