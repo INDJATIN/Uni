@@ -9,7 +9,7 @@ from pyrogram.handlers import MessageHandler
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from pyrogram.filters import command, private, regex, user
 from .helper.bot_commands import BotCommands
-from .helper.message_utils import sendMessage, deleteMessage, editMessage
+from .helper.message_utils import sendMessage, deleteMessage, editMessage, forcesub, isAdmin
 
 async def start(client, message):
     await message.reply_text(
@@ -24,6 +24,13 @@ async def start(client, message):
 
 @bot.on_message(regex(r'https?://\S+'))
 async def scrape_data(client, message):
+    if not await isAdmin(message):
+        if message.from_user.username:
+            tag = f"@{message.from_user.username}"
+        else:
+            tag = message.from_user.mention(message.from_user.first_name, style='html')
+        if await forcesub(c, message, tag):
+            return
     await sendMessage(message, "Bot Is Under Maintenance")
 
 @bot.on_message(command('restart') & user(Config.OWNER_ID))
