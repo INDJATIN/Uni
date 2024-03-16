@@ -5,8 +5,6 @@ from os import path as ospath, execl
 from asyncio import create_subprocess_exec
 from sys import executable
 
-from Bypass.core.sites.gdtot_bypasser import gdtot
-
 @bot.on_message(command('start'))
 async def start_command(client, message):
     await message.reply("Hey, I am Gdtot Bypasser Bot, Just Send Your Gdtot Links And Get Drive Links")
@@ -14,15 +12,9 @@ async def start_command(client, message):
 
 @bot.on_message(regex(r'https?://\S+'))
 async def scrape_data(client, message):
-    if "gdtot" in message.text:
-        reply = await message.reply("Bypassing")
-        link = message.text
-        result = await gdtot(link)
-        await reply.edit(result)
-    elif "gdtot" not in message.text:
-        await message.reply("Sorry, Bot Supports Only Gdtot Links")
+    await message.reply("Sorry, Bot Is Under Maintenance")
 
-@bot.on_message(command('restart') & user(Config.OWNER_ID))
+@bot.on_message(command('restart'))
 async def restart(client, message):
     restart_message = await message.reply('<i>Restarting...</i>')
     await (await create_subprocess_exec('python3', 'update.py')).wait()
