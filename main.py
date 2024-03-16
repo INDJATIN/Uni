@@ -3,7 +3,7 @@ from bs4 import BeautifulSoup
 from urllib.parse import urlparse
 from re import compile, search, match
 from pyrogram import Client, filters
-
+from gdtot_bypasser import gdtot
 bot = Client(
     "project",
     api_id=2381992,
@@ -18,8 +18,10 @@ def start_command(client, message):
 @bot.on_message(filters.regex(r'https?://\S+'))
 def scrape_data(client, message):
     if "gdtot" in message.text:
-        message.reply_text("Tested")
+        link = message.text
+        result = gdtot(link)
+        message.reply_text(result)
     elif "gdtot" not in message.text:
-        message.reply_text("Sorry , Bot Support Only Gdtot Link")
+        message.reply_text("Sorry , Bot Support Only Gdtot Links")
 
 bot.run()
