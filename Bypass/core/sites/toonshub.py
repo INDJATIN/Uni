@@ -21,7 +21,7 @@ async def toonshub_scraper(url):
         msg += f"<b>{item[4]} {item[3]} {item[-1]}</b>\n {s['href']}\n\n"
     return msg
     
-def toons_episode(url):
+await def toons_episode(url):
     raw = urlparse(url)
     main = f"{raw.scheme}://{raw.netloc}"
     res = requests.get(url)
