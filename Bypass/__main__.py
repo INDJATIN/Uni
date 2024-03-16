@@ -48,7 +48,7 @@ async def not_joined(client, message):
         [
             InlineKeyboardButton(
                 "Join Channel",
-                url=client.invitelink)
+                url="https://t.me/uni_bypasser")
         ]
     ]
     await message.reply(
