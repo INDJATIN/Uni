@@ -1,9 +1,12 @@
-FROM hsakal/diffusion1:latest
+FROM python:3.10-slim-buster
 
-WORKDIR /usr/src/app
-RUN chmod 777 /usr/src/app
+WORKDIR /app
 
-COPY . .
+RUN apt-get -qq update --fix-missing && apt-get -qq upgrade -y && apt-get install git -y
+
+COPY requirements.txt .
 RUN pip3 install --no-cache-dir -r requirements.txt
 
-CMD ["bash", "start.sh"]
+COPY . .
+
+CMD ["bash","start.sh"]
