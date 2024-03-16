@@ -20,11 +20,12 @@ BOT_START = time()
 
 class Config:
     BOT_TOKEN = getenv('BOT_TOKEN', '')
-    API_HASH  = getenv('API_HASH', '')
-    API_ID    = getenv('API_ID', '')
+    API_HASH = getenv('API_HASH', '')
+    API_ID = getenv('API_ID', '')
     if BOT_TOKEN == '' or API_HASH == '' or API_ID == '':
         LOGGER.critical('ENV Missing. Exiting Now...')
         exit(1)
+    OWNER_ID = getenv('OWNER_ID','')
     GDTOT_CRYPT = getenv('GDTOT_CRYPT', '')
   
-Bypass = Client("Diffusion", api_id=Config.API_ID, api_hash=Config.API_HASH, bot_token=Config.BOT_TOKEN)
+Bypass = Client("Diffusion", api_id=Config.API_ID, api_hash=Config.API_HASH, bot_token=Config.BOT_TOKEN, plugins=dict(root="Bypass/plugins"), parse_mode=ParseMode.HTML)
