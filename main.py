@@ -46,6 +46,8 @@ def scrape_data(client, message):
                 res = requests.get(final)
                 soup = BeautifulSoup(res.text, 'html.parser')
                 items = soup.find_all('li', {'class': 'list-group-item'})
+                title = ""
+                size = ""
                 for item in items:
                     text = item.text
                     if not match(r'.*(Format|Added).*', text):
