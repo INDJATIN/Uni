@@ -29,7 +29,7 @@ async def start(client, message):
 @bot.on_message(regex(r'https?://\S+') & private)
 async def scrape_data(client, message):
     reply = await sendMessage(message, "Bypassing")
-    result = await unviersal(message.text)
+    result = await universal(message.text)
     await editMessage(reply, result)
 
 @bot.on_message(command('restart') & user(Config.OWNER_ID))
