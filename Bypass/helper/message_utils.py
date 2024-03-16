@@ -4,11 +4,12 @@ from aiofiles.os import remove as aioremove
 from random import choice as rchoice
 from time import time
 from re import match as re_match
-from Bypass import LOGGER, bot
+from Bypass import LOGGER, bot, Config
 from Bypass.helper.build_button import ButtonMaker
 from pyrogram.types import InputMediaPhoto
 from pyrogram.enums import ParseMode, ChatMemberStatus, ChatType
 from pyrogram.errors import ReplyMarkupInvalid, FloodWait, PeerIdInvalid, ChannelInvalid, RPCError, UserNotParticipant, MessageNotModified, MessageEmpty, PhotoInvalidDimensions, WebpageCurlFailed, MediaEmpty
+from Bypass.helper.message_utils import editMessage, sendMessage, deleteMessage
 
 async def chat_info(channel_id):
     channel_id = str(channel_id).strip()
@@ -88,32 +89,24 @@ async def sendMessage(message, text, buttons=None, photo=None):
         LOGGER.error(format_exc())
         return str(e)
 
-
-async def forcesub(message, ids, button=None):
+async def forcesub(bot, message, tag):
+    if not (FSUB_IDS := Config.FSUB_IDS):
+        return
     join_button = {}
-    _msg = ''
-    for channel_id in ids.split():
-        chat = await chat_info(channel_id)
-        try:
-            await chat.get_member(message.from_user.id)
-        except UserNotParticipant:
-            if username := chat.username:
-                invite_link = f"https://t.me/{username}"
-            else:
-                invite_link = chat.invite_link
-            join_button[chat.title] = invite_link
-        except RPCError as e:
-            LOGGER.error(f"{e.NAME}: {e.MESSAGE} for {channel_id}")
-        except Exception as e:
-            LOGGER.error(f'{e} for {channel_id}')
+    for channel_id in FSUB_IDS.split():
+        if not str(channel_id).startswith('-100'):
+            continue
+        chat = await bot.get_chat(channel_id)
+        member = chat.get_member(message.from_user.id)
+        if member.status in [member.LEFT, member.KICKED] :
+            join_button[chat.title] = chat.link or chat.invite_link
     if join_button:
-        if button is None:
-            button = ButtonMaker()
-        _msg = "You haven't joined our channel yet!"
+        btn = ButtonMaker()
         for key, value in join_button.items():
-            button.ubutton(f'Join {key}', value, 'footer')
-    return _msg, button
-
+            btn.buildbutton(key, value)
+        msg = f'💡 {tag},\nYou have to join our channel(s) In Order To Use Bots!\n🔻 Join And Try Again!'
+        reply_message = await sendMessage(msg, bot, message, btn.build_menu(1))
+        return reply_message
 
 async def user_info(user_id):
     try:
