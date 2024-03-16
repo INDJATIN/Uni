@@ -7,7 +7,7 @@ from contextlib import redirect_stdout, suppress
 from asyncio.subprocess import PIPE
 from asyncio import create_subprocess_shell
 from pyrogram.filters import command, user
-from Bypass import Config, Bypass, LOGGER
+from Bypass import Config, bot, LOGGER
 
 @bot.on_message(command('bash') & user(Config.OWNER_ID))
 async def bash(_, message):
