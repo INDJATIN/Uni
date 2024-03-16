@@ -7,6 +7,7 @@ from re import match as re_match
 from Bypass import LOGGER, bot
 from Bypass.helper.build_button import ButtonMaker
 from pyrogram.types import InputMediaPhoto
+from pyrogram.enums import ParseMode, ChatMemberStatus, ChatType
 from pyrogram.errors import ReplyMarkupInvalid, FloodWait, PeerIdInvalid, ChannelInvalid, RPCError, UserNotParticipant, MessageNotModified, MessageEmpty, PhotoInvalidDimensions, WebpageCurlFailed, MediaEmpty
 
 async def chat_info(channel_id):
@@ -23,6 +24,15 @@ async def chat_info(channel_id):
         LOGGER.error(f"{e.NAME}: {e.MESSAGE} for {channel_id}")
         return None
         
+async def isAdmin(message, user_id=None):
+    if message.chat.type != ChatType.PRIVATE:
+        chat = message.chat
+        if user_id:
+            member = await chat.get_member(user_id)
+        else:
+            member = await chat.get_member(message.from_user.id)    
+        return member.status in [ChatMemberStatus.ADMINISTRATOR, ChatMemberStatus.OWNER]
+
 async def deleteMessage(message):
     try:
         await message.delete()
