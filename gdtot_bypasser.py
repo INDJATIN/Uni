@@ -3,7 +3,7 @@ from re import search, compile
 from bs4 import BeautifulSoup
 from urllib.parse import urlparse
 
-def turnstile(url):
+async def turnstile(url):
     body = {
         "sitekey": "0x4AAAAAAADch0Ba3E6N-jTt",
         "url": url,
@@ -13,7 +13,7 @@ def turnstile(url):
     token = r.json()['token']
     return token
 
-def gdtot_cfl(url, session):
+async def gdtot_cfl(url, session):
     res = session.get(url)
     raw = urlparse(url)
     secret_key = search(r'secret_key: "(.*?)"', str(res.text)).group(1)
@@ -23,7 +23,7 @@ def gdtot_cfl(url, session):
        'SessionID': SessionID,
        'get_id': get_id,
        'secret_key': secret_key,
-       'token': turnstile(url)
+       'token': await turnstile(url)
     }
 
     headers = {
@@ -33,18 +33,18 @@ def gdtot_cfl(url, session):
     resp = session.post(f"{raw.scheme}://{raw.netloc}/cfl", data=data, headers=headers, cookies=res.cookies)
     return resp.text
 
-def gdtot(url):
+async def gdtot(url):
     cookie = {'crypt': 'VEJubzJ5WUNBRDc4UmdpR2Z0dkJGaHhya1BUL0RNRzJzSVV5aUdqUEpkaz0%3D'}
     with requests.Session() as session:
         session.cookies.update(cookie)
         res = session.get(url)
-        soup = BeautifulSoup(gdtot_cfl(url, session), 'html.parser')
+        soup = BeautifulSoup(await gdtot_cfl(url, session), 'html.parser')
         dwnld = soup.find('input', {'name':'dwnld'})['value']
         fve = soup.find('input', {'name':'fve'})['value']
-        u = gdtot_click(url, dwnld, fve, session)
+        u = await gdtot_click(url, dwnld, fve, session)
         return u
 
-def gdtot_click(url, dwnld, fve, session):
+async def gdtot_click(url, dwnld, fve, session):
     response = session.get(url)
     raw = urlparse(url)
     api = f"{raw.scheme}://{raw.netloc}/dld"
