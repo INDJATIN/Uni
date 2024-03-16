@@ -18,7 +18,8 @@ async def start(client, message):
         f'''<b>Hey User !</b>
         
         <b> "Universal Bot With Light Weight Functions To Get Your Destination Links Faster"</b>
-        <b> Join Support Group For Lastest Updates</b>''',
+
+<b> [Join Support Group For Lastest Updates]</b>''',
         quote=True,
         reply_markup=InlineKeyboardMarkup([
             [InlineKeyboardButton('🎓 Support Group', url='https://t.me/uni_bypasser')]
