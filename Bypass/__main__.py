@@ -1,5 +1,6 @@
 from Bypass import bot, LOGGER, Config
 from pyrogram import idle
+from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, InlineQueryResultArticle, InputTextMessageContent
 from pyrogram.filters import command, user, regex
 from os import path as ospath, execl
 from asyncio import create_subprocess_exec
