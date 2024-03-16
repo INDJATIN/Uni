@@ -24,7 +24,7 @@ async def scrape_data(client, message):
         reply = await message.reply("Bypassing")
         link = message.text
         result = await gdtot(link)
-        await message.edit(result)
+        await reply.edit(result)
     elif "gdtot" not in message.text:
         await message.reply("Sorry , Bot Support Only Gdtot Links")
 
