@@ -25,6 +25,7 @@ async def start(client, message):
 async def scrape_data(client, message):
     await message.reply_text("Sorry, Bot Is Under Maintenance")
 
+@bot.on_message(command('restart') & user(Config.OWNER_ID))
 async def restart(client, message):
     restart_message = await message.reply('<i>Restarting...</i>')
     await (await create_subprocess_exec('python3', 'update.py')).wait()
@@ -44,8 +45,6 @@ async def check_restart():
 async def main():
     bot.add_handler(MessageHandler(
         start, filters=command(BotCommands.StartCommand) & private))
-    bot.add_handler(MessageHandler(
-        restart, filters=command(BotCommands.RestartCommand) & user(Config.OWNER_ID)))
     LOGGER.info("Bypass Bot Started!")
     await bot.start()
     await idle()
