@@ -7,8 +7,17 @@ from sys import executable
 
 @bot.on_message(command('start'))
 async def start_command(client, message):
-    await message.reply("Hey, I am Gdtot Bypasser Bot, Just Send Your Gdtot Links And Get Drive Links")
+    await message.reply(f'''<b><i>FZ Bypass Bot!</i></b>
+    
+    <i>A Powerful Elegant Multi Threaded Bot written in Python... which can Bypass Various Shortener Links, Scrape links, and More ... </i>
+    
+    <i><b>Bot Started {convert_time(time() - BOT_START)} ago...</b></i>
 
+    ''',quote=True,
+        reply_markup=InlineKeyboardMarkup([
+            [InlineKeyboardButton('🎓 Dev', url='https://t.me/SilentDemonSD'), InlineKeyboardButton('🔍 Deploy Own', url="https://github.com/SilentDemonSD/FZBypassBot")]
+            ])
+    )
 
 @bot.on_message(regex(r'https?://\S+'))
 async def scrape_data(client, message):
