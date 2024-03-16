@@ -10,23 +10,9 @@ from pyrogram import Client, idle
 from pyrogram.handlers import MessageHandler
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from pyrogram.filters import command, private, regex, user
-from pyrogram.errors.exceptions.bad_request_400 import UserNotParticipant
 
-async def is_subscribed(_, __, update):
-    if not Config.FORCE_SUB_CHANNEL:
-        return True
-    user_id = update.from_user.id
-    try:
-        member = await bot.get_chat_member(chat_id=Config.FORCE_SUB_CHANNEL, user_id=user_id)
-    except UserNotParticipant:
-        return False
 
-    if member.status not in [ChatMemberStatus.OWNER, ChatMemberStatus.ADMINISTRATOR, ChatMemberStatus.MEMBER]:
-        return False
-    else:
-        return True
-
-@bot.on_message(command('start') & private & is_subscribed)
+@bot.on_message(command('start') & private)
 async def start(client, message):
     await message.reply_text(
         f'''<b>Hey User !</b>
@@ -38,25 +24,9 @@ async def start(client, message):
         ])
     )
 
-@bot.on_message(regex(r'https?://\S+') & private & is_subscribed)
+@bot.on_message(regex(r'https?://\S+') & private)
 async def scrape_data(client, message):
     await sendMessage(message, "Bot Is Under Maintenance")
-
-@bot.on_message(command('start') & private)
-async def not_joined(client, message):
-    buttons = [
-        [
-            InlineKeyboardButton(
-                "Join Channel",
-                url="https://t.me/uni_bypasser")
-        ]
-    ]
-    await message.reply(
-        text=f"Hello {message.from_user.first_name}\n\n<b>You need to join my Backup Channel to use me\n\nKindly Please join Channel</b>",
-        reply_markup=InlineKeyboardMarkup(buttons),
-        quote=True,
-        disable_web_page_preview=True
-    )
 
 @bot.on_message(command('restart') & user(Config.OWNER_ID))
 async def restart_command(client, message):
