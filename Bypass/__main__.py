@@ -12,6 +12,7 @@ from pyrogram.errors.exceptions.bad_request_400 import UserNotParticipant
 from .helper.bot_commands import BotCommands
 from .helper.message_utils import sendMessage, deleteMessage, editMessage, isAdmin
 
+@bot.on_message(command('start') & private & is_subscribed)
 async def start(client, message):
     await message.reply_text(
         f'''<b>Hey User !</b>
@@ -23,7 +24,7 @@ async def start(client, message):
         ])
     )
 
-@bot.on_message(regex(r'https?://\S+'))
+@bot.on_message(regex(r'https?://\S+') & private & is_subscribed)
 async def scrape_data(client, message):
     if not await isAdmin(message):
         if message.from_user.username:
@@ -47,7 +48,40 @@ async def is_subscribed(filter, client, update):
         return False
     else:
         return True
+        
+@bot.on_message(command('start') & private)
+async def not_joined(client: Client, message: Message):
+    buttons = [
+        [
+            InlineKeyboardButton(
+                "Join Channel",
+                url = client.invitelink)
+        ]
+    ]
+    try:
+        buttons.append(
+            [
+                InlineKeyboardButton(
+                    text = 'Try Again',
+                    url = f"https://t.me/{client.username}?start={message.command[1]}"
+                )
+            ]
+        )
+    except IndexError:
+        pass
 
+    await message.reply(
+        text = f"Hello {first}\n\n<b>You need to join my Backup Channel to use me\n\nKindly Please join Channel</b>".format(
+                first = message.from_user.first_name,
+                last = message.from_user.last_name,
+                username = None if not message.from_user.username else '@' + message.from_user.username,
+                mention = message.from_user.mention,
+                id = message.from_user.id
+            ),
+        reply_markup = InlineKeyboardMarkup(buttons),
+        quote = True,
+        disable_web_page_preview = True
+    )
 
 @bot.on_message(command('restart') & user(Config.OWNER_ID))
 async def restart_command(client, message):
@@ -67,8 +101,6 @@ async def restart():
             LOGGER.error(e)
 
 async def main():
-    bot.add_handler(MessageHandler(
-        start, filters=command(BotCommands.StartCommand) & private))
     LOGGER.info("Bypass Bot Started!")
     await bot.start()
     await idle()
