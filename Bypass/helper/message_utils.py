@@ -25,15 +25,6 @@ async def chat_info(channel_id):
         LOGGER.error(f"{e.NAME}: {e.MESSAGE} for {channel_id}")
         return None
         
-async def isAdmin(message, user_id=None):
-    if message.chat.type != ChatType.PRIVATE:
-        chat = message.chat
-        if user_id:
-            member = await chat.get_member(user_id)
-        else:
-            member = await chat.get_member(message.from_user.id)    
-        return member.status in [ChatMemberStatus.ADMINISTRATOR, ChatMemberStatus.OWNER]
-
 async def deleteMessage(message):
     try:
         await message.delete()
@@ -88,25 +79,6 @@ async def sendMessage(message, text, buttons=None, photo=None):
     except Exception as e:
         LOGGER.error(format_exc())
         return str(e)
-
-async def forcesub(bot, message, tag):
-    if not (FSUB_IDS := Config.FSUB_IDS):
-        return
-    join_button = {}
-    for channel_id in FSUB_IDS.split():
-        if not str(channel_id).startswith('-100'):
-            continue
-        chat = await bot.get_chat(channel_id)
-        member = chat.get_member(message.from_user.id)
-        if member.status in [member.LEFT, member.KICKED] :
-            join_button[chat.title] = chat.link or chat.invite_link
-    if join_button:
-        btn = ButtonMaker()
-        for key, value in join_button.items():
-            btn.buildbutton(key, value)
-        msg = f'💡 {tag},\nYou have to join our channel(s) In Order To Use Bots!\n🔻 Join And Try Again!'
-        reply_message = await sendMessage(msg, bot, message, btn.build_menu(1))
-        return reply_message
 
 async def user_info(user_id):
     try:
