@@ -26,14 +26,14 @@ async def scrape_data(client, message):
     await message.reply_text("Sorry, Bot Is Under Maintenance")
 
 @bot.on_message(command('restart') & user(Config.OWNER_ID))
-async def restart(client, message):
+async def restart_command(client, message):
     restart_message = await message.reply('<i>Restarting...</i>')
     await (await create_subprocess_exec('python3', 'update.py')).wait()
     with open(".restartmsg", "w") as f:
         f.write(f"{restart_message.chat.id}\n{restart_message.id}\n")
     execl(executable, executable, "-m", "Bypass")
 
-async def check_restart():
+async def restart():
     if ospath.isfile(".restartmsg"):
         with open(".restartmsg") as f:
             chat_id, msg_id = map(int, f.readline().split())
@@ -52,5 +52,5 @@ async def main():
 if __name__ == "__main__":
     signal(SIGINT, lambda s, f: execl(executable, executable, "-m", "Bypass"))
     bot.loop.run_until_complete(main())
-    bot.loop.create_task(check_restart())
+    bot.loop.create_task(restart())
     bot.loop.run_forever()
