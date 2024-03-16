@@ -1,4 +1,4 @@
-from bot.core.sites.toonshub import toonshub_main
+from Bypass.core.sites.toonshub import toonshub_main
 
 async def universal(url):
      if "toonshub" in url:
