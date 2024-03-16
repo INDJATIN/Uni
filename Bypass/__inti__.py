@@ -28,4 +28,4 @@ class Config:
     OWNER_ID = getenv('OWNER_ID','')
     GDTOT_CRYPT = getenv('GDTOT_CRYPT', '')
   
-Bypass = Client("Diffusion", api_id=Config.API_ID, api_hash=Config.API_HASH, bot_token=Config.BOT_TOKEN, plugins=dict(root="Bypass/plugins"), parse_mode=ParseMode.HTML)
+bot = Client("Diffusion", api_id=Config.API_ID, api_hash=Config.API_HASH, bot_token=Config.BOT_TOKEN, plugins=dict(root="Bypass/plugins"), parse_mode=ParseMode.HTML)
