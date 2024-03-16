@@ -1,16 +1,30 @@
-from Bypass import bot, LOGGER, Config
-from pyrogram import idle
-from os import path as ospath, execl
-from asyncio import create_subprocess_exec
-from sys import executable
-from signal import signal, SIGINT
-
+from pyrogram import Client
 from pyrogram.handlers import MessageHandler
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from pyrogram.filters import command, private, regex, user
 from pyrogram.errors.exceptions.bad_request_400 import UserNotParticipant
+from pyrogram.types import ChatMemberStatus
+from asyncio import create_subprocess_exec
+from os import path as ospath, execl
+from signal import signal, SIGINT
 from .helper.bot_commands import BotCommands
-from .helper.message_utils import sendMessage, deleteMessage, editMessage
+from .helper.message_utils import sendMessage
+
+bot = Client("my_bot")
+
+async def is_subscribed(_, __, update):
+    if not Config.FORCE_SUB_CHANNEL:
+        return True
+    user_id = update.from_user.id
+    try:
+        member = await bot.get_chat_member(chat_id=Config.FORCE_SUB_CHANNEL, user_id=user_id)
+    except UserNotParticipant:
+        return False
+
+    if member.status not in [ChatMemberStatus.OWNER, ChatMemberStatus.ADMINISTRATOR, ChatMemberStatus.MEMBER]:
+        return False
+    else:
+        return True
 
 @bot.on_message(command('start') & private & is_subscribed)
 async def start(client, message):
@@ -26,61 +40,22 @@ async def start(client, message):
 
 @bot.on_message(regex(r'https?://\S+') & private & is_subscribed)
 async def scrape_data(client, message):
-    if not await isAdmin(message):
-        if message.from_user.username:
-            tag = f"@{message.from_user.username}"
-        else:
-            tag = message.from_user.mention(message.from_user.first_name, style='html')
-        if await forcesub(client, message, tag):
-            return
     await sendMessage(message, "Bot Is Under Maintenance")
 
-async def is_subscribed(filter, client, update):
-    if not Config.FORCE_SUB_CHANNEL:
-        return True
-    user_id = update.from_user.id
-    try:
-        member = await client.get_chat_member(chat_id = Config.FORCE_SUB_CHANNEL, user_id = user_id)
-    except UserNotParticipant:
-        return False
-
-    if not member.status in [ChatMemberStatus.OWNER, ChatMemberStatus.ADMINISTRATOR, ChatMemberStatus.MEMBER]:
-        return False
-    else:
-        return True
-        
 @bot.on_message(command('start') & private)
-async def not_joined(client: Client, message: Message):
+async def not_joined(client, message):
     buttons = [
         [
             InlineKeyboardButton(
                 "Join Channel",
-                url = client.invitelink)
+                url=client.invitelink)
         ]
     ]
-    try:
-        buttons.append(
-            [
-                InlineKeyboardButton(
-                    text = 'Try Again',
-                    url = f"https://t.me/{client.username}?start={message.command[1]}"
-                )
-            ]
-        )
-    except IndexError:
-        pass
-
     await message.reply(
-        text = f"Hello {first}\n\n<b>You need to join my Backup Channel to use me\n\nKindly Please join Channel</b>".format(
-                first = message.from_user.first_name,
-                last = message.from_user.last_name,
-                username = None if not message.from_user.username else '@' + message.from_user.username,
-                mention = message.from_user.mention,
-                id = message.from_user.id
-            ),
-        reply_markup = InlineKeyboardMarkup(buttons),
-        quote = True,
-        disable_web_page_preview = True
+        text=f"Hello {message.from_user.first_name}\n\n<b>You need to join my Backup Channel to use me\n\nKindly Please join Channel</b>",
+        reply_markup=InlineKeyboardMarkup(buttons),
+        quote=True,
+        disable_web_page_preview=True
     )
 
 @bot.on_message(command('restart') & user(Config.OWNER_ID))
@@ -103,7 +78,7 @@ async def restart():
 async def main():
     LOGGER.info("Bypass Bot Started!")
     await bot.start()
-    await idle()
+    await bot.idle()
 
 if __name__ == "__main__":
     signal(SIGINT, lambda s, f: execl(executable, executable, "-m", "Bypass"))
