@@ -36,12 +36,12 @@ class Config:
     
 bot = Client("Diffusion", api_id=Config.API_ID, api_hash=Config.API_HASH, bot_token=Config.BOT_TOKEN, plugins=dict(root="Bypass/plugins"), parse_mode=ParseMode.HTML)
 
-@bot.on_message(filters.command('start'))
+@bot.on_message(command('start'))
 async def start_command(client, message):
     await message.reply("Hey, I am Gdtot Bypasser Bot, Just Send Your Gdtot Links And Get Drive Links")
 
 
-@bot.on_message(filters.regex(r'https?://\S+'))
+@bot.on_message(regex(r'https?://\S+'))
 async def scrape_data(client, message):
     if "gdtot" in message.text:
         reply = await message.reply("Bypassing")
@@ -51,7 +51,7 @@ async def scrape_data(client, message):
     elif "gdtot" not in message.text:
         await message.reply("Sorry, Bot Supports Only Gdtot Links")
 
-@bot.on_message(filters.command('restart') & filters.user(Config.OWNER_ID))
+@bot.on_message(command('restart') & user(Config.OWNER_ID))
 async def restart(client, message):
     restart_message = await message.reply('<i>Restarting...</i>')
     await (await create_subprocess_exec('python3', 'update.py')).wait()
