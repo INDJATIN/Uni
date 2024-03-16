@@ -10,7 +10,7 @@ from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from pyrogram.filters import command, private, regex, user
 from pyrogram.errors.exceptions.bad_request_400 import UserNotParticipant
 from .helper.bot_commands import BotCommands
-from .helper.message_utils import sendMessage, deleteMessage, editMessage, isAdmin
+from .helper.message_utils import sendMessage, deleteMessage, editMessage
 
 @bot.on_message(command('start') & private & is_subscribed)
 async def start(client, message):
