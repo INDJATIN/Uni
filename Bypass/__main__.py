@@ -6,7 +6,7 @@ from sys import executable
 
 from pyrogram.handlers import MessageHandler, CallbackQueryHandler
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, InlineQueryResultArticle, InputTextMessageContent
-from pyrogram.filters import command, user, regex
+from pyrogram.filters import command, user, regex, private
 from .helper.bot_commands import BotCommands
 
 async def start(client, message):
