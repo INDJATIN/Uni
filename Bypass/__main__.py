@@ -47,7 +47,7 @@ def main():
     bot.add_handler(MessageHandler(
         start, filters=command(BotCommands.StartCommand) & private))
     LOGGER.info(f"Bypass Bot Started!")
-    signal(SIGINT, exit_clean_up)
+    
 
 bot.loop.run_until_complete(main())
 bot.loop.run_forever()
