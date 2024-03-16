@@ -23,7 +23,7 @@ def gdtot_cfl(url, session):
        'SessionID': SessionID,
        'get_id': get_id,
        'secret_key': secret_key,
-       'token': await turnstile(url)
+       'token': turnstile(url)
     }
 
     headers = {
@@ -38,10 +38,10 @@ def gdtot(url):
     with requests.Session() as session:
         session.cookies.update(cookie)
         res = session.get(url)
-        soup = BeautifulSoup(await gdtot_cfl(url, session), 'html.parser')
+        soup = BeautifulSoup(gdtot_cfl(url, session), 'html.parser')
         dwnld = soup.find('input', {'name':'dwnld'})['value']
         fve = soup.find('input', {'name':'fve'})['value']
-        u = await gdtot_click(url, dwnld, fve, session)
+        u = gdtot_click(url, dwnld, fve, session)
         return u
 
 def gdtot_click(url, dwnld, fve, session):
