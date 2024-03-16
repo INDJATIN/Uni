@@ -1,5 +1,4 @@
 from pyrogram import Client, filters
-import pyrogram.tgcrypto
 
 bot = Client(
     "project",
