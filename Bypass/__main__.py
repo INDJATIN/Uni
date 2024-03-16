@@ -1,4 +1,4 @@
-from Bypass import Bypass, bot, LOGGER, Config
+from Bypass import bot, LOGGER, Config
 from pyrogram import idle
 from pyrogram.filters import command, user, regex
 from os import path as ospath, execl
@@ -20,7 +20,7 @@ async def restart(client, message):
     await (await create_subprocess_exec('python3', 'update.py')).wait()
     with open(".restartmsg", "w") as f:
         f.write(f"{restart_message.chat.id}\n{restart_message.id}\n")
-    execl(executable, executable, "-m", "Bypass")
+    execl(executable, executable, "-m", "bot")
 
 async def restart():
     if ospath.isfile(".restartmsg"):
