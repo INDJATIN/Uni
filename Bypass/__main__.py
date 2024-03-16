@@ -1,14 +1,9 @@
-from pyrogram import idle, Client
-from pyrogram.enums import ParseMode
+from FZBypass import bot, LOGGER, Config
+from pyrogram import idle
 from pyrogram.filters import command, user, regex
-from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
-from time import time
-from dotenv import load_dotenv
-from os import path as ospath, execl, getenv
+from os import path as ospath, execl
 from asyncio import create_subprocess_exec
 from sys import executable
-from logging import getLogger, FileHandler, StreamHandler, INFO, ERROR, basicConfig
-from uvloop import install
 
 from Bypass.core.sites.gdtot_bypasser import gdtot
 
