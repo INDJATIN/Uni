@@ -11,6 +11,23 @@ bot = Client(
     bot_token="7059380834:AAGHzI3KZc8RjEqoT6JjbTYsMmmy5zh9nC4",
 )
 
+def res_soup(url, word):
+    res = requests.get(url)
+    soup = BeautifulSoup(res.text, 'html.parser')
+    sub_links = soup.find_all('a', href=compile(fr'.*{word}.*'))
+    valid_links = [link['href'] for link in sub_links if link.get('href')]
+    return valid_links
+
+def url_check(url):
+    raw = urlparse(url)
+    res = requests.get(url)
+    m = search(r'replace.*"(.*)"', res.text)
+    if m:
+        id = m.group(1)
+        u = f"{raw.scheme}://{raw.netloc}{id}"
+        if "404" not in u:
+            return u
+
 @bot.on_message(filters.command('start'))
 def start_command(client, message):
     message.reply_text("Send me a link to scrape data!")
@@ -42,23 +59,6 @@ def scrape_data(client, message):
     # Split data into chunks of 5 items
     chunks = [data[i:i + 5] for i in range(0, len(data), 5)]
     current_page = 0
-    
-    def res_soup(url, word):
-        res = requests.get(url)
-        soup = BeautifulSoup(res.text, 'html.parser')
-        sub_links = soup.find_all('a', href=compile(fr'.*{word}.*'))
-        valid_links = [link['href'] for link in sub_links if link.get('href')]
-        return valid_links
-
-    def url_check(url):
-        raw = urlparse(url)
-        res = requests.get(url)
-        m = search(r'replace.*"(.*)"', res.text)
-        if m:
-            id = m.group(1)
-            u = f"{raw.scheme}://{raw.netloc}{id}"
-            if "404" not in u:
-                return u
                 
     def generate_markup():
         return {
