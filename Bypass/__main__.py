@@ -8,6 +8,7 @@ from signal import signal, SIGINT
 from pyrogram.handlers import MessageHandler
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from pyrogram.filters import command, private, regex, user
+from pyrogram.errors.exceptions.bad_request_400 import UserNotParticipant
 from .helper.bot_commands import BotCommands
 from .helper.message_utils import sendMessage, deleteMessage, editMessage, isAdmin
 
@@ -34,13 +35,11 @@ async def scrape_data(client, message):
     await sendMessage(message, "Bot Is Under Maintenance")
 
 async def is_subscribed(filter, client, update):
-    if not FORCE_SUB_CHANNEL:
+    if not Config.FORCE_SUB_CHANNEL:
         return True
     user_id = update.from_user.id
-    if user_id in ADMINS:
-        return True
     try:
-        member = await client.get_chat_member(chat_id = FORCE_SUB_CHANNEL, user_id = user_id)
+        member = await client.get_chat_member(chat_id = Config.FORCE_SUB_CHANNEL, user_id = user_id)
     except UserNotParticipant:
         return False
 
