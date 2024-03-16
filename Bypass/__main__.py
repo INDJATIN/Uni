@@ -3,7 +3,6 @@ from pyrogram.handlers import MessageHandler
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from pyrogram.filters import command, private, regex, user
 from pyrogram.errors.exceptions.bad_request_400 import UserNotParticipant
-from pyrogram.types import ChatMemberStatus
 from asyncio import create_subprocess_exec
 from os import path as ospath, execl
 from signal import signal, SIGINT
