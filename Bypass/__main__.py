@@ -11,7 +11,7 @@ async def start_command(client, message):
     
     <i>A Powerful Elegant Multi Threaded Bot written in Python... which can Bypass Various Shortener Links, Scrape links, and More ... </i>
     
-    <i><b>Bot Started {convert_time(time() - BOT_START)} ago...</b></i>
+    <i><b>Bot Started  ago...</b></i>
 
     ''',quote=True,
         reply_markup=InlineKeyboardMarkup([
