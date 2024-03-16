@@ -7,7 +7,7 @@ bot = Client(
     "project",
     api_id=2381992,
     api_hash="661ce2469998288dbac1147e10ff4d44",
-    bot_token="6715308533:AAEVkp7wqYv0fwTiJdZGrRAXt1ygMsxqg-s",
+    bot_token="6815990321:AAHNRCp-LRze6LYrP0Goy4gP9EEQneIsNGo",
 )
 
 CHANNEL_ID = "gdtot_bypasser"
