@@ -5,7 +5,7 @@ from asyncio import create_subprocess_exec
 from os import path as ospath, execl
 from signal import signal, SIGINT
 from .helper.bot_commands import BotCommands
-from .helper.message_utils import sendMessage
+from .helper.message_utils import sendMessage, editMessage
 from pyrogram import Client, idle
 from pyrogram.handlers import MessageHandler
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
