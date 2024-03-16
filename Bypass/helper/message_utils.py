@@ -4,6 +4,7 @@ from aiofiles.os import remove as aioremove
 from random import choice as rchoice
 from time import time
 from re import match as re_match
+from pyrogram import Client
 from Bypass import LOGGER, bot, Config
 from Bypass.helper.build_button import ButtonMaker
 from pyrogram.types import InputMediaPhoto
