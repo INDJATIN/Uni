@@ -2,7 +2,7 @@ import requests
 from re import search, match
 from bs4 import BeautifulSoup
 from urllib.parse import urlparse
-from bot.core.production.ads_scraper import cloudbypass
+from Bypass.core.production.ads_scraper import cloudbypass
 
 async def toonshub_main(url):
     if search(r'.*/episode/.*', url):
