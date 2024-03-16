@@ -1,4 +1,4 @@
-from FZBypass import bot, LOGGER, Config
+from Bypass import bot, LOGGER, Config
 from pyrogram import idle
 from pyrogram.filters import command, user, regex
 from os import path as ospath, execl
