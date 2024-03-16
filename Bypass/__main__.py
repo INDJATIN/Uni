@@ -1,11 +1,11 @@
 import asyncio
 from Bypass import bot, LOGGER, Config
+from Bypass.universal import universal
 from asyncio import create_subprocess_exec
 from os import path as ospath, execl
 from signal import signal, SIGINT
 from .helper.bot_commands import BotCommands
 from .helper.message_utils import sendMessage
-
 from pyrogram import Client, idle
 from pyrogram.handlers import MessageHandler
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
@@ -28,7 +28,9 @@ async def start(client, message):
 
 @bot.on_message(regex(r'https?://\S+') & private)
 async def scrape_data(client, message):
-    await sendMessage(message, "Bot Is Under Maintenance")
+    reply = await sendMessage(message, "Bypassing")
+    result = await unviersal(message.text)
+    await editMessage(reply, result)
 
 @bot.on_message(command('restart') & user(Config.OWNER_ID))
 async def restart_command(client, message):
