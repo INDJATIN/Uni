@@ -12,16 +12,10 @@ from .helper.bot_commands import BotCommands
 
 async def start(client, message):
     await message.reply_text(
-        f'''<b><i>Bypass Bot!</i></b>
-        
-        <i>A Powerful Elegant Multi Threaded Bot written in Python... which can Bypass Various Shortener Links, Scrape links, and More ... </i>
-        
-        <i><b>Bot Started  ago...</b></i>
-    
-        ''',
+        f'''<b> Universal Bot With Light Weight Functions To Get Your Destination Links Faster</b>''',
         quote=True,
         reply_markup=InlineKeyboardMarkup([
-            [InlineKeyboardButton('🎓 Dev', url='https://t.me/SilentDemonSD'), InlineKeyboardButton('🔍 Deploy Own', url="https://github.com/SilentDemonSD/FZBypassBot")]
+            [InlineKeyboardButton('🎓 Dev', url='https://t.me/uni_bypasser)]
         ])
     )
 
