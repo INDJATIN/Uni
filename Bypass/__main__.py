@@ -1,14 +1,16 @@
 from Bypass import bot, LOGGER, Config
 from pyrogram import idle
-from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, InlineQueryResultArticle, InputTextMessageContent
-from pyrogram.filters import command, user, regex
 from os import path as ospath, execl
 from asyncio import create_subprocess_exec
 from sys import executable
 
-@bot.on_message(command('start'))
-async def start_command(client, message):
-    await message.reply(f'''<b><i>FZ Bypass Bot!</i></b>
+from pyrogram.handlers import MessageHandler, CallbackQueryHandler
+from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, InlineQueryResultArticle, InputTextMessageContent
+from pyrogram.filters import command, user, regex
+from .helper.bot_commands import BotCommands
+
+async def start(client, message):
+    await message.reply(f'''<b><i>Bypass Bot!</i></b>
     
     <i>A Powerful Elegant Multi Threaded Bot written in Python... which can Bypass Various Shortener Links, Scrape links, and More ... </i>
     
@@ -40,9 +42,11 @@ async def restart():
             await bot.edit_message_text(chat_id=chat_id, message_id=msg_id, text="<i>Restarted !</i>")
         except Exception as e:
             LOGGER.error(e)
+def main()
+    bot.add_handler(MessageHandler(
+        start, filters=command(BotCommands.StartCommand) & private))
+    LOGGER.info(f"Bypass Bot Started!")
+    signal(SIGINT, exit_clean_up)
 
-bot.start()
-LOGGER.info('Bot Started!')
-bot.loop.run_until_complete(restart())
-idle()
-bot.stop()
+bot.loop.run_until_complete(main())
+bot.loop.run_forever()
