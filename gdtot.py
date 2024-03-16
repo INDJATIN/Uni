@@ -34,7 +34,7 @@ def gdtot_cfl(url, session):
     return resp.text
 
 def gdtot(url):
-    cookie = {'crypt': config_dict['GDTOT_CRYPT']}
+    cookie = {'crypt': 'VEJubzJ5WUNBRDc4UmdpR2Z0dkJGaHhya1BUL0RNRzJzSVV5aUdqUEpkaz0%3D'}
     with requests.Session() as session:
         session.cookies.update(cookie)
         res = session.get(url)
