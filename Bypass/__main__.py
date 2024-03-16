@@ -1,15 +1,15 @@
-from pyrogram import Client
-from pyrogram.handlers import MessageHandler
-from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
-from pyrogram.filters import command, private, regex, user
-from pyrogram.errors.exceptions.bad_request_400 import UserNotParticipant
+from Bypass import bot, LOGGER, Config
 from asyncio import create_subprocess_exec
 from os import path as ospath, execl
 from signal import signal, SIGINT
 from .helper.bot_commands import BotCommands
 from .helper.message_utils import sendMessage
 
-bot = Client("my_bot")
+from pyrogram import Client
+from pyrogram.handlers import MessageHandler
+from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
+from pyrogram.filters import command, private, regex, user
+from pyrogram.errors.exceptions.bad_request_400 import UserNotParticipant
 
 async def is_subscribed(_, __, update):
     if not Config.FORCE_SUB_CHANNEL:
