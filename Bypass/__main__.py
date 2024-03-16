@@ -7,7 +7,7 @@ from signal import signal, SIGINT
 
 from pyrogram.handlers import MessageHandler
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
-from pyrogram.filters import command, private, regex
+from pyrogram.filters import command, private, regex, user
 from .helper.bot_commands import BotCommands
 
 async def start(client, message):
