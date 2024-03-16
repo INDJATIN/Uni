@@ -2,7 +2,7 @@ import requests
 from re import search
 from bs4 import BeautifulSoup
 
-async def tooshub_main(url):
+async def toonshub_main(url):
     if search(r'.*episode.*', url):
         return
     elif search(r'.*redirect.*', url):
