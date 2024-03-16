@@ -1,7 +1,7 @@
 import asyncio
 from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
-from gdtot_bypaser import gdtot
+from gdtot_bypasser import gdtot
 
 bot = Client(
     "project",
