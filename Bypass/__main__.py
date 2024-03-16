@@ -12,7 +12,9 @@ from .helper.bot_commands import BotCommands
 
 async def start(client, message):
     await message.reply_text(
-        f'''<b> Universal Bot With Light Weight Functions To Get Your Destination Links Faster</b>''',
+        f'''<b>Hey User !</b>
+        
+        <b> Universal Bot With Light Weight Functions To Get Your Destination Links Faster</b>''',
         quote=True,
         reply_markup=InlineKeyboardMarkup([
             [InlineKeyboardButton('🎓 Support Group', url='https://t.me/uni_bypasser')]
