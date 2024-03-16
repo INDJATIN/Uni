@@ -27,5 +27,5 @@ async def scrape_data(client, message):
     elif "gdtot" not in message.text:
         await message.reply("Sorry , Bot Support Only Gdtot Links")
 
-bot.run()
 LOGGER.info("Bot Started")
+bot.run()
