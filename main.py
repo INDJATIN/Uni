@@ -84,5 +84,5 @@ def scrape_data(client, message):
         edit_chunk(chat_id, message_id, current_page)
         bot.answer_callback_query(callback_query.id)
 
-    edit_chunk(message.chat.id, message.message_id, current_page
+    edit_chunk(message.chat.id, message.message_id, current_page)
 bot.run()
