@@ -2,15 +2,23 @@ import requests
 from re import search, match
 from bs4 import BeautifulSoup
 from urllib.parse import urlparse
+from bot.core.production.ads_scraper import cloudbypass
 
 async def toonshub_main(url):
     if search(r'.*/episode/.*', url):
         return await toons_episode(url)
     elif search(r'.*redirect.*', url):
-        return
+        return await toonshun_redirect(url)
     else:
         return await toonshub_scraper(url)
-      
+        
+async def toonshun_redirect(url):
+    resp = requests.get(url)
+    adlink = (resp.url).split('=')[1]
+    ads = f"https://gtlinks.me/{adlink}"
+    return await cloudbypass(ads)
+
+
 async def toonshub_scraper(url):
     msg = ""
     res = requests.get(url)
