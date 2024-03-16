@@ -12,30 +12,6 @@ from uvloop import install
 
 from Bypass.core.sites.gdtot_bypasser import gdtot
 
-install()
-basicConfig(format="[%(asctime)s] [%(levelname)s] - %(message)s", #  [%(filename)s:%(lineno)d]
-            datefmt="%d-%b-%y %I:%M:%S %p",
-            handlers=[FileHandler('log.txt'), StreamHandler()],
-            level=INFO)
-
-getLogger("pyrogram").setLevel(ERROR)
-LOGGER = getLogger(__name__)
-
-load_dotenv('config.env', override=True)
-BOT_START = time()
-
-class Config:
-    BOT_TOKEN = getenv('BOT_TOKEN', '')
-    API_HASH = getenv('API_HASH', '')
-    API_ID = getenv('API_ID', '')
-    if BOT_TOKEN == '' or API_HASH == '' or API_ID == '':
-        LOGGER.critical('ENV Missing. Exiting Now...')
-        exit(1)
-    OWNER_ID = getenv('OWNER_ID','')
-    GDTOT_CRYPT = getenv('GDTOT_CRYPT', '')
-    
-bot = Client("Diffusion", api_id=Config.API_ID, api_hash=Config.API_HASH, bot_token=Config.BOT_TOKEN, plugins=dict(root="Bypass/plugins"), parse_mode=ParseMode.HTML)
-
 @bot.on_message(command('start'))
 async def start_command(client, message):
     await message.reply("Hey, I am Gdtot Bypasser Bot, Just Send Your Gdtot Links And Get Drive Links")
