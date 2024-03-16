@@ -33,15 +33,21 @@ async def scrape_data(client, message):
             return
     await sendMessage(message, "Bot Is Under Maintenance")
 
-async def forcesub(client, message, tag):
-    channel_id = Config.FSUB_IDS
-    is_member = await client.get_chat_member(channel_id, message.from_user.id)
-    if is_member.status == "left":
-        # User is not a member, prompt them to join
-        await sendMessage(message, f"Please join our channel to access this feature: t.me/{channel_id}")
-        return True  # Stop further processing of the message
+async def is_subscribed(filter, client, update):
+    if not FORCE_SUB_CHANNEL:
+        return True
+    user_id = update.from_user.id
+    if user_id in ADMINS:
+        return True
+    try:
+        member = await client.get_chat_member(chat_id = FORCE_SUB_CHANNEL, user_id = user_id)
+    except UserNotParticipant:
+        return False
+
+    if not member.status in [ChatMemberStatus.OWNER, ChatMemberStatus.ADMINISTRATOR, ChatMemberStatus.MEMBER]:
+        return False
     else:
-        return False  # User is already a member, continue processing the message
+        return True
 
 
 @bot.on_message(command('restart') & user(Config.OWNER_ID))
