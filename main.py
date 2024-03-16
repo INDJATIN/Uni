@@ -4,7 +4,7 @@ from urllib.parse import urlparse
 from re import compile, search, match
 from pyrogram import Client, filters
 from gdtot_bypasser import gdtot
-from logging import getlogger
+from logging import getLogger
 
 bot = Client(
     "project",
@@ -12,7 +12,7 @@ bot = Client(
     api_hash="661ce2469998288dbac1147e10ff4d44",
     bot_token="6531755753:AAHGBmBD6-eiHZgPvmZjeGxG1Ge4-HKYE2E",
 )
-LOGGER = getlogger(__name__)
+LOGGER = getLogger(__name__)
 
 @bot.on_message(filters.command('start'))
 async def start_command(client, message):
