@@ -43,7 +43,7 @@ async def restart():
             await bot.edit_message_text(chat_id=chat_id, message_id=msg_id, text="<i>Restarted !</i>")
         except Exception as e:
             LOGGER.error(e)
-def main():
+async def main():
     bot.add_handler(MessageHandler(
         start, filters=command(BotCommands.StartCommand) & private))
     LOGGER.info(f"Bypass Bot Started!")
