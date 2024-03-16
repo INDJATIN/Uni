@@ -5,7 +5,7 @@ from signal import signal, SIGINT
 from .helper.bot_commands import BotCommands
 from .helper.message_utils import sendMessage
 
-from pyrogram import Client
+from pyrogram import Client, idle
 from pyrogram.handlers import MessageHandler
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from pyrogram.filters import command, private, regex, user
