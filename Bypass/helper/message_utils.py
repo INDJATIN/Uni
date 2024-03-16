@@ -1,5 +1,5 @@
 from pyrogram.errors import ReplyMarkupInvalid, FloodWait, PeerIdInvalid, ChannelInvalid, RPCError, UserNotParticipant, MessageNotModified, MessageEmpty, PhotoInvalidDimensions, WebpageCurlFailed, MediaEmpty
-from Bypass.plugins.button_build import ButtonMaker
+from Bypass.helper.button_build import ButtonMaker
 
 async def chat_info(channel_id):
     channel_id = str(channel_id).strip()
