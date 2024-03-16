@@ -10,7 +10,7 @@ bot = Client(
     "project",
     api_id=2381992,
     api_hash="661ce2469998288dbac1147e10ff4d44",
-    bot_token="6715308533:AAEVkp7wqYv0fwTiJdZGrRAXt1ygMsxqg-s,
+    bot_token="6715308533:AAEVkp7wqYv0fwTiJdZGrRAXt1ygMsxqg-s",
 )
 LOGGER = getLogger(__name__)
 
