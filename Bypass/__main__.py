@@ -9,7 +9,7 @@ from pyrogram.handlers import MessageHandler
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from pyrogram.filters import command, private, regex, user
 from .helper.bot_commands import BotCommands
-from .helper.message_utils import sendMessage, deleteMessage, editMessage, forcesub, isAdmin
+from .helper.message_utils import sendMessage, deleteMessage, editMessage, isAdmin
 
 async def start(client, message):
     await message.reply_text(
@@ -32,6 +32,17 @@ async def scrape_data(client, message):
         if await forcesub(client, message, tag):
             return
     await sendMessage(message, "Bot Is Under Maintenance")
+
+async def forcesub(client, message, tag):
+    channel_id = Config.FSUB_IDS
+    is_member = await client.get_chat_member(channel_id, message.from_user.id)
+    if is_member.status == "left":
+        # User is not a member, prompt them to join
+        await sendMessage(message, f"Please join our channel to access this feature: t.me/{channel_id}")
+        return True  # Stop further processing of the message
+    else:
+        return False  # User is already a member, continue processing the message
+
 
 @bot.on_message(command('restart') & user(Config.OWNER_ID))
 async def restart_command(client, message):
