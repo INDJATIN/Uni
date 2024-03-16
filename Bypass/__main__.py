@@ -15,7 +15,7 @@ async def start(client, message):
         f'''<b> Universal Bot With Light Weight Functions To Get Your Destination Links Faster</b>''',
         quote=True,
         reply_markup=InlineKeyboardMarkup([
-            [InlineKeyboardButton('🎓 Dev', url='https://t.me/uni_bypasser)]
+            [InlineKeyboardButton('🎓 Support Group', url='https://t.me/uni_bypasser')]
         ])
     )
 
