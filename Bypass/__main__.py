@@ -3,6 +3,7 @@ from pyrogram import idle
 from os import path as ospath, execl
 from asyncio import create_subprocess_exec
 from sys import executable
+from signal import signal, SIGINT
 
 from pyrogram.handlers import MessageHandler, CallbackQueryHandler
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, InlineQueryResultArticle, InputTextMessageContent
