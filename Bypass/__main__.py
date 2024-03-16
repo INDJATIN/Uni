@@ -77,7 +77,7 @@ async def restart():
 async def main():
     LOGGER.info("Bypass Bot Started!")
     await bot.start()
-    await bot.idle()
+    await idle()
 
 if __name__ == "__main__":
     signal(SIGINT, lambda s, f: execl(executable, executable, "-m", "Bypass"))
