@@ -1,3 +1,4 @@
+aiofiles
 aiohttp
 bs4
 cfscrape
@@ -8,6 +9,7 @@ httpx
 python-dotenv
 pyrofork
 requests
+telegraph
 tgcrypto
 urllib3==1.26
 uvloop
