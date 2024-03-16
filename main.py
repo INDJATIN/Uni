@@ -21,9 +21,10 @@ async def start_command(client, message):
 @bot.on_message(filters.regex(r'https?://\S+'))
 async def scrape_data(client, message):
     if "gdtot" in message.text:
+        reply = await message.reply("Bypassing")
         link = message.text
         result = await gdtot(link)
-        await message.reply(result)
+        await message.edit(result)
     elif "gdtot" not in message.text:
         await message.reply("Sorry , Bot Support Only Gdtot Links")
 
