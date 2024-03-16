@@ -16,16 +16,16 @@ LOGGER = getLogger(__name__)
 
 @bot.on_message(filters.command('start'))
 async def start_command(client, message):
-    await message.reply_text("Hey, I am Gdtot Bypasser Bot, Just Send Your Gdtot Links And Get Drive Links")
+    await message.reply("Hey, I am Gdtot Bypasser Bot, Just Send Your Gdtot Links And Get Drive Links")
 
 @bot.on_message(filters.regex(r'https?://\S+'))
 async def scrape_data(client, message):
     if "gdtot" in message.text:
         link = message.text
         result = await gdtot(link)
-        await message.reply_text(result)
+        await message.reply(result)
     elif "gdtot" not in message.text:
-        await message.reply_text("Sorry , Bot Support Only Gdtot Links")
+        await message.reply("Sorry , Bot Support Only Gdtot Links")
 
 bot.run()
 LOGGER.info("Bot Started")
