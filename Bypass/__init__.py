@@ -26,7 +26,7 @@ class Config:
         LOGGER.critical('ENV Missing. Exiting Now...')
         exit(1)
     OWNER_ID = getenv('OWNER_ID','')
-    FSUB_IDS = getenv('FSUB_IDS','')
+    FORCE_SUB_CHANNEL = getenv('FORCE_SUB_CHANNEL','')
     GDTOT_CRYPT = getenv('GDTOT_CRYPT', '')
     
 bot = Client("Diffusion", api_id=Config.API_ID, api_hash=Config.API_HASH, bot_token=Config.BOT_TOKEN, parse_mode=ParseMode.HTML)
