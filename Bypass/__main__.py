@@ -27,10 +27,11 @@ async def scrape_data(client, message):
 
 @bot.on_message(command('restart'))
 async def restart_bot(client, message):
-    restart_message = await message.reply_text('<i>Restarting...</i>')
-    await create_subprocess_exec(executable, "python3", "update.py")
+    async def restart(client, message):
+    restart_message = await message.reply('<i>Restarting...</i>')
+    await (await create_subprocess_exec('python3', 'update.py')).wait()
     with open(".restartmsg", "w") as f:
-        f.write(f"{restart_message.chat.id}\n{restart_message.message_id}\n")
+        f.write(f"{restart_message.chat.id}\n{restart_message.id}\n")
     execl(executable, executable, "-m", "Bypass")
 
 async def check_restart():
