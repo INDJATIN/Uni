@@ -14,8 +14,7 @@ async def start_command(client, message):
 async def scrape_data(client, message):
     await message.reply("Sorry, Bot Is Under Maintenance")
 
-@bot.
-on_message(command('restart'))
+@bot.on_message(command('restart'))
 async def restart(client, message):
     restart_message = await message.reply('<i>Restarting...</i>')
     await (await create_subprocess_exec('python3', 'update.py')).wait()
