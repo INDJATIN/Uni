@@ -24,7 +24,7 @@ async def start(client, message):
 
 @bot.on_message(regex(r'https?://\S+'))
 async def scrape_data(client, message):
-    await sendMessage("Bot Is Under Maintenance")
+    await sendMessage(message, "Bot Is Under Maintenance")
 
 @bot.on_message(command('restart') & user(Config.OWNER_ID))
 async def restart_command(client, message):
