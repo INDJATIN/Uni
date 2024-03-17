@@ -1,3 +1,7 @@
+import requests
+import re
+from bs4 import BeautifulSoup
+
 async def kayoanime(url):
     res = requests.get(url)
     soup = BeautifulSoup(res.text,'html.parser')
