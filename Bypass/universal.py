@@ -10,7 +10,6 @@ async def universal(url, message):
     else:
         return "No Bypass Found"
     await reply.edit_text(result,
-                          quote=True,
                           reply_markup=InlineKeyboardMarkup([
                                [InlineKeyboardButton('🎓 Support Group', url='https://t.me/uni_bypasser')]
                           ])
