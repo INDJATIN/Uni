@@ -17,7 +17,7 @@ async def toonshun_redirect(url):
     adlink = (resp.url).split('=')[1]
     ads = f"https://gtlinks.me/{adlink}"
     dl =  await cloudbypass(ads)
-    return f" *Here Bypassed Link* :{dl}"
+    return f" <b><u>Here Bypassed Link :</u></b>\n{dl}"
 
 
 async def toonshub_scraper(url):
