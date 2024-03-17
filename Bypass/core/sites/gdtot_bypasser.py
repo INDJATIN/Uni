@@ -1,70 +1,20 @@
-import requests
-from re import search, compile
+import requests 
 from bs4 import BeautifulSoup
-from urllib.parse import urlparse
 
-async def turnstile(url):
-    body = {
-        "sitekey": "0x4AAAAAAADch0Ba3E6N-jTt",
-        "url": url,
-        "invisible": False
-    }
-    r = requests.post("https://dirty-agneta-studentworks3.koyeb.app/solve", json=body)
-    token = r.json()['token']
-    return token
-
-async def gdtot_cfl(url, session):
-    res = session.get(url)
-    raw = urlparse(url)
-    secret_key = search(r'secret_key: "(.*?)"', str(res.text)).group(1)
-    get_id = search(r'get_id : "(.*?)"', str(res.text)).group(1)
-    SessionID = search(r"SessionID : '(.*?)'", str(res.text)).group(1)
-    data = {
-       'SessionID': SessionID,
-       'get_id': get_id,
-       'secret_key': secret_key,
-       'token': await turnstile(url)
-    }
-
-    headers = {
-        'X-Requested-With': 'XMLHttpRequest',
-        'Referer': url,
-    }
-    resp = session.post(f"{raw.scheme}://{raw.netloc}/cfl", data=data, headers=headers, cookies=res.cookies)
-    return resp.text
-
-async def gdtot(url):
-    cookie = {'crypt': 'VEJubzJ5WUNBRDc4UmdpR2Z0dkJGaHhya1BUL0RNRzJzSVV5aUdqUEpkaz0%3D'}
-    with requests.Session() as session:
-        session.cookies.update(cookie)
-        res = session.get(url)
-        soup = BeautifulSoup(await gdtot_cfl(url, session), 'html.parser')
-        dwnld = soup.find('input', {'name':'dwnld'})['value']
-        fve = soup.find('input', {'name':'fve'})['value']
-        u = await gdtot_click(url, dwnld, fve, session)
-        return u
-
-async def gdtot_click(url, dwnld, fve, session):
-    response = session.get(url)
-    raw = urlparse(url)
-    api = f"{raw.scheme}://{raw.netloc}/dld"
-    data = {
-        'dwnld': dwnld,
-        'fve': fve,
-    }
-    headers = {
-        'Referer': url,
-        'Content-Type': 'application/x-www-form-urlencoded'
-    }
-    res = session.post(api, headers=headers, data=data)
-    pattern = r'URL=(https?://\S+)'
-    match = search(pattern, res.text).group(1)
-    resp = session.get(match).text
-    soup = BeautifulSoup(resp,'html.parser')
-    sub_link = soup.find_all('a', href=compile(r'.*drive.*open.*'))
-    if sub_link:
-        if sub_link is not None:
-            for r in sub_link:
-                return r['href']
-    else:
-        return 'File Not Found / User Rate Limited'
+async def skymovieshd(url):
+    res = requests.get(url, allow_redirects=False)
+    soup = BeautifulSoup(res.text, 'html.parser')
+    t = soup.select('div[class^="Robiul"]')
+    gd_txt = f"<i>{t[-1].text.replace('Download ', '')}</i>"
+    _cache = []
+    for link in soup.select('a[href*="howblogs.xyz"]'):
+        if link['href'] in _cache:
+            continue
+        _cache.append(link['href'])
+        gd_txt += f"\n\n<b>{link.text} :</b> \n"
+        resp = requests.get(link['href'], allow_redirects=False)
+        nsoup = BeautifulSoup(resp.text, 'html.parser') 
+        atag = nsoup.select('div[class="cotent-box"] > a[href]')
+        for no, link in enumerate(atag, start=1): 
+            gd_txt += f"{no}. {link['href']}\n"
+    return gd_txt
