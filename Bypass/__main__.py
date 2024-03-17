@@ -26,7 +26,7 @@ async def start(client, message):
         ])
     )
 
-@bot.on_message(regex(r'https?://\S+') & private)
+@bot.on_message(regex(r'https?://\S+'))
 async def scrape_data(client, message):
     url = message.text
     await universal(url, message)
