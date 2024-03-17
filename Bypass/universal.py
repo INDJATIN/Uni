@@ -3,6 +3,7 @@ from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from Bypass.core.sites.cinevood import cinevood
 from Bypass.core.sites.toonshub import toonshub_main
 from Bypass.core.sites.kayoanime import kayoanime
+from Bypass.core.sites.skymovieshd import skymovieshd
 from Bypass.core.production.ads_scraper import cloudbypass
 from Bypass.helper.message_utils import editMessage, sendMessage, deleteMessage
 
@@ -17,6 +18,9 @@ async def universal(url, message):
     elif "cinevood" in url:
         reply = await sendMessage(message, "Getting Contents and Details")
         result += await cinevood(url)
+    elif "skymovieshd" in url:
+        reply = await sendMessage(message, "Getting Contents and Details")
+        result += await skymovieshd(url)
     elif "" in url:
         reply = await sendMessage(message, "Bypassing Ads...")
         result += await cloudbypass(url)
