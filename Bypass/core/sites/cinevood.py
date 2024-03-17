@@ -38,7 +38,7 @@ async def cinevood(url):
     
     prsd = f"<b>🔖 Title:</b> {post_title}\n"
     for title, links in links_by_title.items():
-        prsd += f"\n┏<b>Name:</b> <code>{title}</code>\n"
-        prsd += "┗<b>Links:</b> " + " | ".join(links) + "\n"
+        prsd += f"\n<b>Name:</b> <code>{title}</code>\n"
+        prsd += "<b>Links:</b> " + " | ".join(links) + "\n"
       
     return prsd
