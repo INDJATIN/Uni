@@ -6,11 +6,13 @@ from Bypass.helper.message_utils import editMessage, sendMessage, deleteMessage
 
 
 async def universal(url, message):
-    reply = await sendMessage(message, "Bypassing....")
+    reply = ""
     result = ""
     if "toonshub" in url:
+        reply += await sendMessage(message, "Bypassing....")
         result += await toonshub_main(url)
     elif "kayoanime" in url:
+        reply += await sendMessage(message, "Getting Contents and Details")
         result += await kayoanime(url)
     else:
         return "No Bypass Found"
