@@ -4,15 +4,13 @@ from Bypass.core.sites.toonshub import toonshub_main
 from Bypass.core.sites.kayoanime import kayoanime
 from Bypass.helper.message_utils import editMessage, sendMessage, deleteMessage
 
-
 async def universal(url, message):
-    reply = ""
     result = ""
     if "toonshub" in url:
-        reply += await sendMessage(message, "Bypassing....")
+        reply = await sendMessage(message, "Bypassing....")
         result += await toonshub_main(url)
     elif "kayoanime" in url:
-        reply += await sendMessage(message, "Getting Contents and Details")
+        reply = await sendMessage(message, "Getting Contents and Details")
         result += await kayoanime(url)
     else:
         return "No Bypass Found"
@@ -20,5 +18,4 @@ async def universal(url, message):
                           reply_markup=InlineKeyboardMarkup([
                                [InlineKeyboardButton('🎓 Support Group', url='https://t.me/uni_bypasser')]
                           ])
-                         )
-
+                         )                 
